@@ -1,0 +1,6 @@
+*
+!.gitignore
+!site.conf.dist
+!wiki.conf.dist
+!vaultwarden.conf.dist
+
