@@ -25,7 +25,7 @@ services:
     env_file:
       - ./services/vaultwarden/conf/.env
     ports:
-      - "8080:80"
+      - "8081:80"
     volumes:
       - ./services/vaultwarden/data:/data
 
