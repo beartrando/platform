@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name beartrando.org www.beartrando.org;
+    server_name vaultwarden.beartrando.org wiki.beartrando.org beartrando.org www.beartrando.org;
 
     location /.well-known/acme-challenge/ {
         root /var/www/certbot;

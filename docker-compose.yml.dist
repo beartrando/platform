@@ -26,12 +26,12 @@ services:
     volumes:
       - ./services/certbot/conf:/etc/letsencrypt
       - ./services/certbot/www:/var/www/certbot
-  #    entrypoint: >
-  #      sh -c "trap exit TERM;
-  #             while :; do
-  #               certbot renew --webroot -w /var/www/certbot;
-  #               sleep 12h & wait $!;
-  #             done"
+    entrypoint: >
+      sh -c "trap exit TERM;
+             while :; do
+               certbot renew --webroot -w /var/www/certbot;
+               sleep 12h & wait $!;
+             done"
     networks:
       - default
 
@@ -41,8 +41,8 @@ services:
     restart: unless-stopped
     env_file:
       - ./services/vaultwarden/conf/.env
-    ports:
-      - "8081:80"
+#    ports:
+#      - "8081:80"
     volumes:
       - ./services/vaultwarden/data:/data
     networks:
