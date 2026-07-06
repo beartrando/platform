@@ -16,3 +16,10 @@ certbot/certbot certonly \
 --email beartrando@gmail.com \
 --agree-tos --no-eff-email \
 --expand
+
+
+
+bw config server https://vault.beartrando.org
+bw login
+bw unlock
+bw export --format json --output backup.json
