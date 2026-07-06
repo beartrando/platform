@@ -12,6 +12,7 @@ services:
       - ./services/nginx/config/wiki.conf:/etc/nginx/conf.d/wiki.conf:ro
       - ./services/nginx/config/vaultwarden.conf:/etc/nginx/conf.d/vaultwarden.conf:ro
       - ./services/nginx/config/site.conf:/etc/nginx/conf.d/site.conf:ro
+      - ./services/nginx/config/mail.conf:/etc/nginx/conf.d/mail.conf:ro
       - ./services/nginx/logs:/etc/logs/nginx
       - ./services/nginx/html:/usr/share/nginx/html
     command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
@@ -77,6 +78,30 @@ services:
       - ./services/postgres/data:/var/lib/postgresql/data
     networks:
       - default
+
+  mailpit:
+    image: axllent/mailpit
+    container_name: beartrando-mailpit
+    ports:
+      - 8025:8025
+      - 1025:1025
+    environment:
+      MP_WEBROOT : "/mailpit/"
+#      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+      MP_SMTP_AUTH: "login:pass"
+      MP_MAX_MESSAGES: 5000
+    volumes:
+    - ./mailpit-data:/data
+    networks:
+      - default
+    restart: always
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
 
 networks:
   default:
