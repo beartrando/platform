@@ -1,8 +1,17 @@
 server {
-    listen 80;
+    listen 443 ssl;
     server_name vaultwarden.beartrando.org;
 
-    # проксируем все запросы на Vaultwarden
+    ssl_certificate /etc/letsencrypt/live/beartrando.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/beartrando.org/privkey.pem;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
     location / {
         proxy_pass http://vaultwarden:80;
         proxy_set_header Host $host;
