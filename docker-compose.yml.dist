@@ -97,10 +97,11 @@ services:
       - default
     restart: always
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ["CMD", "wget", "--spider", "http://localhost:8025"]
       interval: 30s
       timeout: 10s
       retries: 5
+
 
 
 networks:
