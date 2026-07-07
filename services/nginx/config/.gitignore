@@ -1,6 +1,7 @@
 *
 !.gitignore
 !site.conf.dist
+!site.init.conf.dist
 !mail.conf.dist
 !wiki.conf.dist
 !vault.conf.dist
