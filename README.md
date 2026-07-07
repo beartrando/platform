@@ -22,4 +22,4 @@ certbot/certbot certonly \
 bw config server https://vault.beartrando.org
 bw login
 bw unlock
-bw export --format json --output backup.json
+bw list items < ~/.bw-password > backup-items.json

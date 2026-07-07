@@ -3,7 +3,6 @@
 !site.conf.dist
 !mail.conf.dist
 !wiki.conf.dist
-!vaultwarden.conf.dist
-!beartrando.conf.init.dist
+!vault.conf.dist
 
 

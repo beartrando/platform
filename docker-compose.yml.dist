@@ -10,7 +10,7 @@ services:
       - ./services/certbot/conf:/etc/letsencrypt
       - ./services/certbot/www:/var/www/certbot
       - ./services/nginx/config/wiki.conf:/etc/nginx/conf.d/wiki.conf:ro
-      - ./services/nginx/config/vaultwarden.conf:/etc/nginx/conf.d/vaultwarden.conf:ro
+      - ./services/nginx/config/vault.conf:/etc/nginx/conf.d/vault.conf:ro
       - ./services/nginx/config/site.conf:/etc/nginx/conf.d/site.conf:ro
       - ./services/nginx/config/mail.conf:/etc/nginx/conf.d/mail.conf:ro
       - ./services/nginx/logs:/etc/logs/nginx

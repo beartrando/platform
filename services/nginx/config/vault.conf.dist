@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name vaultwarden.beartrando.org;
+    server_name vault.beartrando.org;
 
     location /.well-known/acme-challenge/ {
         root /var/www/certbot;
@@ -13,7 +13,7 @@ server {
 
 server {
     listen 443 ssl;
-    server_name vaultwarden.beartrando.org;
+    server_name vault.beartrando.org;
 
     ssl_certificate /etc/letsencrypt/live/beartrando.org/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/beartrando.org/privkey.pem;
