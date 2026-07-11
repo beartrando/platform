@@ -43,7 +43,7 @@ services:
     networks:
       - default
     healthcheck:
-      test: ["CMD-SHELL", "certbot --version || exit 1"]
+      test: ["CMD", "certbot", "--version"]
       interval: 12h
       timeout: 10s
       retries: 3
@@ -99,7 +99,7 @@ services:
     networks:
       - default
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      test: [ "CMD", "pg_isready -U postgres" ]
       interval: 10s
       timeout: 3s
       retries: 5
@@ -120,10 +120,10 @@ services:
       - default
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "/mailpit version || exit 1"]
+      test: ["CMD", "/mailpit", "version"]
       interval: 30s
       timeout: 10s
-      retries: 5
+      retries: 3
       start_period: 30s
 
 
