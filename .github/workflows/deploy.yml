@@ -22,7 +22,7 @@ jobs:
           script: |
             cd ${{ secrets.DEPLOY_PATH }}   # путь к репе на сервере
             git pull origin master
-            cp docker-compose.yml.dist docker-compose.yml
+#            cp docker-compose.yml.dist docker-compose.yml
             docker compose pull
             docker compose up -d --remove-orphans
 
