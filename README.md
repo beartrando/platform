@@ -10,9 +10,10 @@ docker run --rm \
 certbot/certbot certonly \
 --webroot -w /var/www/certbot \
 -d beartrando.org \
--d vaultwarden.beartrando.org \
+-d vault.beartrando.org \
 -d wiki.beartrando.org \
 -d mail.beartrando.org \
+-d vipp.beartrando.org \
 --email beartrando@gmail.com \
 --agree-tos --no-eff-email \
 --expand
