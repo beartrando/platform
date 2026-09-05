@@ -13,6 +13,7 @@ certbot/certbot certonly \
 -d vault.beartrando.org \
 -d wiki.beartrando.org \
 -d mail.beartrando.org \
+-d tiny.beartrando.org \
 -d vipp.beartrando.org \
 --email beartrando@gmail.com \
 --agree-tos --no-eff-email \
