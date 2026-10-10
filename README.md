@@ -21,7 +21,8 @@ certbot/certbot certonly \
 -d lenvora-streaming.beartrando.org \
 --email beartrando@gmail.com \
 --agree-tos --no-eff-email \
---expand
+--expand \
+--non-interactive
 
 
 
