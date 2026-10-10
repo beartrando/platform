@@ -26,7 +26,7 @@ server {
     }
 
     location / {
-        proxy_pass http://host.docker.internal:8083;
+        proxy_pass http://tiny:5295;
 
         proxy_http_version 1.1;
 
