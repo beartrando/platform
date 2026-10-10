@@ -3,6 +3,7 @@ services:
   nginx:
     container_name: beartrando-nginx
     build: ./services/nginx
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
@@ -23,6 +24,8 @@ services:
       - vault
     networks:
       - default
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     healthcheck:
       test: [ "CMD-SHELL", "curl -kfs --resolve beartrando.org:443:127.0.0.1 https://beartrando.org/ || exit 1" ]
       interval: 30s
@@ -33,6 +36,7 @@ services:
   certbot:
     image: certbot/certbot
     container_name: beartrando-certbot
+    restart: unless-stopped
     volumes:
       - ./services/certbot/conf:/etc/letsencrypt
       - ./services/certbot/www:/var/www/certbot
@@ -110,6 +114,7 @@ services:
   mailpit:
     image: axllent/mailpit
     container_name: beartrando-mailpit
+    restart: unless-stopped
     environment:
 #      MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
@@ -120,14 +125,12 @@ services:
       - ./services/mailpit/data:/data
     networks:
       - default
-    restart: always
     healthcheck:
       test: ["CMD-SHELL", "/mailpit version >/dev/null 2>&1 || exit 0"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 30s
-
 
 
 networks:
