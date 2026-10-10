@@ -15,6 +15,10 @@ certbot/certbot certonly \
 -d mail.beartrando.org \
 -d tiny.beartrando.org \
 -d vipp.beartrando.org \
+-d tic-tac-toe.beartrando.org \
+-d tic-tac-toe-streaming.beartrando.org \
+-d lenvora.beartrando.org \
+-d lenvora-streaming.beartrando.org \
 --email beartrando@gmail.com \
 --agree-tos --no-eff-email \
 --expand

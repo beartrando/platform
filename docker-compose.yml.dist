@@ -3,6 +3,7 @@ services:
   nginx:
     container_name: beartrando-nginx
     build: ./services/nginx
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
@@ -13,14 +14,18 @@ services:
       - ./services/nginx/config/vault.conf:/etc/nginx/conf.d/vault.conf:ro
       - ./services/nginx/config/site.conf:/etc/nginx/conf.d/site.conf:ro
       - ./services/nginx/config/mail.conf:/etc/nginx/conf.d/mail.conf:ro
+      - ./services/nginx/config/vipp.conf:/etc/nginx/conf.d/vipp.conf:ro
+      - ./services/nginx/config/tiny.conf:/etc/nginx/conf.d/tiny.conf:ro
       - ./services/nginx/logs:/etc/logs/nginx
       - ./services/nginx/html:/usr/share/nginx/html
     command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
     depends_on:
       - wiki
-      - vaultwarden
+      - vault
     networks:
       - default
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     healthcheck:
       test: [ "CMD-SHELL", "curl -kfs --resolve beartrando.org:443:127.0.0.1 https://beartrando.org/ || exit 1" ]
       interval: 30s
@@ -31,6 +36,7 @@ services:
   certbot:
     image: certbot/certbot
     container_name: beartrando-certbot
+    restart: unless-stopped
     volumes:
       - ./services/certbot/conf:/etc/letsencrypt
       - ./services/certbot/www:/var/www/certbot
@@ -49,14 +55,14 @@ services:
       retries: 3
       start_period: 30s
 
-  vaultwarden:
+  vault:
     image: vaultwarden/server:latest
-    container_name: beartrando-vaultwarden
+    container_name: beartrando-vault
     restart: unless-stopped
     env_file:
-      - ./services/vaultwarden/conf/.env
+      - ./services/vault/conf/.env
     volumes:
-      - ./services/vaultwarden/data:/data
+      - ./services/vault/data:/data
     networks:
       - default
     healthcheck:
@@ -68,7 +74,7 @@ services:
 
   wiki:
     image: requarks/wiki:latest
-    container_name: beartrando-wikijs
+    container_name: beartrando-wiki
     restart: unless-stopped
     environment:
       DB_TYPE: postgres
@@ -88,7 +94,7 @@ services:
 
   postgres:
     image: postgres:17.6
-    container_name: beartrando-wikijs-db
+    container_name: beartrando-postgres
     restart: unless-stopped
     environment:
       POSTGRES_USER: $POSTGRES_USER
@@ -108,6 +114,7 @@ services:
   mailpit:
     image: axllent/mailpit
     container_name: beartrando-mailpit
+    restart: unless-stopped
     environment:
 #      MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
@@ -118,14 +125,12 @@ services:
       - ./services/mailpit/data:/data
     networks:
       - default
-    restart: always
     healthcheck:
       test: ["CMD-SHELL", "/mailpit version >/dev/null 2>&1 || exit 0"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 30s
-
 
 
 networks:
